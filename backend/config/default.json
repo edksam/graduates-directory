@@ -1,0 +1,36 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "public": "../public/",
+  "paginate": {
+    "default": 50,
+    "max": 50
+  },
+  "mongodb": "mongodb://localhost:27017/graduatesdb",
+  "authentication": {
+    "entity": "user",
+    "service": "users",
+    "secret": "NIyAkzXhUirOxWnEhihjkewsGcM=",
+    "authStrategies": ["jwt", "local"],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "oauth": {
+      "redirect": "http://localhost:3000",
+      "github": {
+        "key": "708396fe844fdcb02edf",
+        "secret": "8fe34f8bf1f6de6ae16e06322da818f474839970"
+      }
+    },
+    "local": {
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  }
+}
