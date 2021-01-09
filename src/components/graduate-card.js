@@ -1,8 +1,6 @@
 import React from "react";
-// import axios from "axios";
 import { Link } from "react-router-dom";
 import { GraduateContext } from "../context/graduate-context";
-// import { flashErrorMessage } from "./flash-message";
 import { Card, Space, Tag, Collapse } from "antd";
 import { createFromIconfontCN } from "@ant-design/icons";
 import { GithubFilled } from "@ant-design/icons";
@@ -27,7 +25,7 @@ const GraduateCard = ({ graduate }) => {
         bordered={false}
         style={{ width: 560, float: "left", margin: 15 }}
         extra={
-          <Link to={`/graduates/${graduate._id}/profile`}>
+          <Link to={`/graduates/edit/${graduate._id}`}>
             <IconFont type="icon-tuichu" />
           </Link>
         }
@@ -40,29 +38,30 @@ const GraduateCard = ({ graduate }) => {
         <p>{graduate.languages} </p>
         <Space>
           <p>
-            {graduate.willing_remote ? (
-              <Tag color={"volcano"}>Can Work Remote</Tag>
+            {/* {graduate.willing_remote ? (
+              <Tag color={"volcano"}>Can't Work Remote</Tag>
             ) : (
-              <Tag color={"geekblue"}>Can't Work Remote</Tag>
-            )}
+              <Tag color={"geekblue"}>Can Work Remote</Tag>
+            )} */}
+            <Tag color={"geekblue"}>
+              {graduate.willing_remote ? "Open to Remote" : ""}
+            </Tag>
           </p>
+
           <p>
-            {graduate.willing_locate ? (
-              <Tag color={"volcano"}>Can Work Remote</Tag>
+            {/* {graduate.willing_locate ? (
+              <Tag color={"volcano"}>Can't Relocate</Tag>
             ) : (
-              <Tag color={"geekblue"}>Can't Work Remote</Tag>
-            )}
+              <Tag color={"geekblue"}>Can Work Remote</Tag>
+            )} */}
+            <Tag color={"volcano"}>
+              {graduate.willing_relocate ? "Open to Relocate" : ""}
+            </Tag>
           </p>
         </Space>
         <Space>
           <Tag color={"green"}>{graduate.full_time ? "Full Time" : ""}</Tag>
           <Tag color={"green"}>{graduate.part_time ? "Part Time" : ""}</Tag>
-          <Tag color={"green"}>
-            {graduate.willing_relocate ? "Open to Relocate" : ""}
-          </Tag>
-          <Tag color={"green"}>
-            {graduate.willing_remote ? "Open to Remote" : ""}
-          </Tag>
         </Space>
         <Space>
           <Link to={graduate.linkedin}>

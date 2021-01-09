@@ -35,24 +35,25 @@ const tailLayout = {
 const GraduateAdd = ({ graduate }) => {
   const [state, dispatch] = useContext(GraduateContext);
   const [redirect, setRedirect] = useState(false);
-  const { register, errors, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: graduate,
   });
+  // const onSubmit = (data) => console.log("data");
 
   const { TextArea } = Input;
   //Form logic
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
+  // const onFinish = (values) => {
+  //   console.log("Success:", values);
+  // };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  // const onFinishFailed = (errorInfo) => {
+  //   console.log("Failed:", errorInfo);
+  // };
 
   //Checkboxes
-  function onChange(checkedValues) {
-    console.log('checked = ', checkedValues);
-  }
+  // function onChange(checkedValues) {
+  //   console.log("checked = ", checkedValues);
+  // }
 
   const createGraduate = async (data) => {
     try {
@@ -105,7 +106,7 @@ const GraduateAdd = ({ graduate }) => {
           {graduate._id ? "Edit Your Profile" : "Add Your Profile"}
         </h1>
       </Divider>
-      <Row>
+      <Row style={{ width: "100%" }}>
         <Col span={16}>
           <Form
             {...layout}
@@ -113,14 +114,13 @@ const GraduateAdd = ({ graduate }) => {
             initialValues={{
               remember: true,
             }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             onSubmit={handleSubmit(onSubmit)}
             loading={state.loading}
-            layout="vertical"
+            layout="horizontal"
             style={{ marginLeft: 30 }}
           >
             <Form.Item
+              htmlFor="fullname"
               label="Full Name"
               name="fullname"
               rules={[
@@ -130,12 +130,12 @@ const GraduateAdd = ({ graduate }) => {
                 },
               ]}
             >
-              <Input id="graduate.fullname" name="graduate.fullname" />
+              <Input type="text" ref={register} id="fullname" name="fullname" />
             </Form.Item>
 
             <Form.Item
+              htmlFor="headline"
               label="Headline"
-              name="headline"
               rules={[
                 {
                   required: true,
@@ -143,11 +143,11 @@ const GraduateAdd = ({ graduate }) => {
                 },
               ]}
             >
-              <Input id="graduate.fullname" name="graduate.fullname" />
+              <Input type="text" id="headline" name="headline" ref={register} />
             </Form.Item>
             <Form.Item
+              htmlFor="current_location"
               label="Current Location"
-              name="current_location"
               rules={[
                 {
                   required: true,
@@ -156,80 +156,130 @@ const GraduateAdd = ({ graduate }) => {
               ]}
             >
               <Input
+              type="text"
                 placeholder="Current Location"
-                id="graduate.fullname"
-                name="graduate.fullname"
+                id="current_location"
+                name="current_location"
+                ref={register}
               />
             </Form.Item>
             <Form.Item
+              htmlFor="languages"
               label="Language"
-              name="languages"
               rules={[
                 {
                   required: true,
-                  message: "Please input your headline!",
+                  message: "Please input your languages!",
                 },
               ]}
             >
               <Input
+              type="text"
                 placeholder="Enter your languages"
-                id="graduate.languages"
-                name="graduate.languages"
+                id="languages"
+                name="languages"
+                ref={register}
               />
             </Form.Item>
-            <Form.Item
-              label="Headline"
-              name="headline"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your headline!",
-                },
-              ]}
-              tooltip="Enter Languages seperated by commas"
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Headline"
-              name="headline"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your headline!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+
             <Divider orientation="left">Work Type</Divider>
             <Space>
-              <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
+              <Col>
                 <Row>
-                  <Col span={8}>
-                    <Checkbox value="A">A</Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox value="B">B</Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox value="C">C</Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox value="D">D</Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox value="E">E</Checkbox>
-                  </Col>
-                </Row>
-              </Checkbox.Group>
-            </Space>
+                  <Checkbox type="checkbox" id="fulltime" name="full_time" ref={register}>
+                    Full Time
+                  </Checkbox>
 
-            <Col span={8} style={{ float: "right" }}>
-              <TextArea showCount maxLength={2000} />
+                  <Checkbox type="checkbox"  id="part_time" name="part_time" ref={register}>
+                    Part Time
+                  </Checkbox>
+
+                  <Checkbox type="checkbox"  id="full_time" name="Internship" ref={register}>
+                    Internship
+                  </Checkbox>
+                </Row>
+              </Col>
+            </Space>
+            <Space>
+              <Col>
+                <Row>
+                  <Checkbox
+                  type="checkbox"
+                    id="willing_remote"
+                    name="willing_remote"
+                    ref={register}
+                  >
+                    Remote
+                  </Checkbox>
+
+                  <Checkbox
+                  type="checkbox"
+                    id="willing_relocate"
+                    name="willing_relocate"
+                    ref={register}
+                  >
+                    Relocate
+                  </Checkbox>
+
+                  <Checkbox type="checkbox"  id="temp" name="temp" ref={register}>
+                    Temp
+                  </Checkbox>
+                  <Checkbox type="checkbox" id="contract" name="contract" ref={register}>
+                    Contract
+                  </Checkbox>
+                </Row>
+              </Col>
+            </Space>
+            <br />
+            <br />
+            <Form.Item htmlFor="website" label="Website" name="website">
+              <Input type="text"  ref={register} id="website" name="website" />
+            </Form.Item>
+            <Form.Item htmlFor="likedin" label="Linkedin url" name="linkedin">
+              <Input type="text" ref={register} id="linkedin" name="linked" />
+            </Form.Item>
+            <Form.Item htmlFor="github" label="Github Handle" name="github">
+              <Input type="text" ref={register} id="github" name="github" />
+            </Form.Item>
+            <Divider orientation="left">Hidden Details</Divider>
+            <Space>
+              <Form.Item htmlFor="email" label="Email Address" name="email">
+                <Input
+                type="text"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  ref={register}
+                />
+              </Form.Item>
+              <Form.Item htmlFor="mobile" label="Mobile Number" name="mobile">
+                <Input
+                  type="text"
+                  id="mobile"
+                  name="mobile"
+                  placeholder="Mobile Number"
+                  ref={register}
+                />
+              </Form.Item>
+            </Space>
+            <br />
+            <br />
+            <Divider orientation="left">Resume Text</Divider>
+            <Col style={{}}>
+              <TextArea
+                type="text"
+                id="resume_text"
+                name="resume_text"
+                placeholder="Resume Text"
+                ref={register}
+                showCount
+                maxLength={2000}
+                rows={20}
+              />
             </Col>
+
             <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit">
+              <Button type="submit" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
