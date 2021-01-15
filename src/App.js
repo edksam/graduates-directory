@@ -11,35 +11,25 @@ import logo from "./logo.png";
 import GraduateHomePage from "./pages/graduate-home-page";
 import GraduateAddPage from "./pages/graduate-add-page";
 import GraduateListPage from "./pages/GraduateListPage";
-import GraduateInfoPage from "./pages/GraduateInfoPage";
+import GraduateInfoPage from "./pages/GraduateEditPage";
+import GraduateProfilePage from "./pages/GraduateProfilePage";
 import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import ContactForm from "./pages/ContactForm";
+import LoginButton from "./pages/LoginButton";
+import LogoutButton from "./pages/LogoutButton";
+import AuthNav from "./pages/AuthNav";
 
 // import GraduateAdd from "./components/graduate-add";
 
+const { Header, Content, Footer } = Layout;
+
 const App = () => {
-  const { Header, Content, Footer } = Layout;
   return (
     <Router>
       <Layout className="layout">
-        <Header>
-          <span>
-            <img src={logo} className="logo" alt="logo" />
-          </span>
-          <Menu style={{ float: "right" }} theme="dark" mode="horizontal">
-            <Menu.Item key="2">
-              <Link activeClassName="active" to="/graduates/new">
-                Add Graduate
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Link to="/graduates">Graduates</Link>
-            </Menu.Item>
-            <Menu.Item key="1">
-              <Link to="/Login">Login</Link>
-            </Menu.Item>
-          </Menu>
-        </Header>
-        <Content style={{ padding: "0 50px" }}>
+        <NavBar />
+        <Content style={{ padding: "0 20px" }}>
           <PageHeader
             className="site-page-header"
             title="Graduates Directory"
@@ -48,16 +38,43 @@ const App = () => {
 
         <Switch>
           <Route exact path="/" component={GraduateHomePage} />
-          <Route exact path="/Login" component={Login} />
+          {/* <Route exact path="/Login" component={LoginButton} /> */}
           <Route exact path="/graduates/" component={GraduateListPage} />
           <Route exact path="/graduates/new" component={GraduateAddPage} />
-          <Route path="/graduates/edit/:_id" component={GraduateInfoPage} />
+          <Route path="/graduates/edit/:_id" component={GraduateAddPage} />
+          <Route exact path="/graduates/:_id" component={GraduateProfilePage} />
+          <Route exact path="/contact" component={ContactForm} />
+          {/* <Route exact path="/Logout" component={LogoutButton} /> */}
+
+          <Route>
+            <NotFound />
+          </Route>
         </Switch>
         <Footer style={{ textAlign: "center" }}>
           Copyright @ 2021 Code Your Future
         </Footer>
       </Layout>
     </Router>
+  );
+};
+
+const NavBar = () => {
+  return (
+    <>
+      <Header>
+        <Link to="/">
+          <span>
+            <img src={logo} className="logo" alt="logo" />
+          </span>
+        </Link>
+
+        <Menu style={{ float: "right" }} theme="dark" mode="horizontal">
+          <Menu.Item key="1">
+            <AuthNav />
+          </Menu.Item>
+        </Menu>
+      </Header>
+    </>
   );
 };
 

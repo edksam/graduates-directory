@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import GraduateAdd from "../components/graduate-add";
+import GraduateDetailPage from "../pages/GraduateDetailPage";
+// import GraduateAdd from "../components/graduate-add";
 import { flashErrorMessage } from "../components/flash-message";
 import { GraduateContext } from "../context/graduate-context";
 
@@ -38,7 +39,7 @@ const GraduateInfoPage = ({ match }) => {
 
   return (
     <div>
-      <GraduateAdd graduate={state.graduate} />
+      <GraduateDetailPage graduate={state.graduate} />
     </div>
   );
 };

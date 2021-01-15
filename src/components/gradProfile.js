@@ -1,3 +1,97 @@
+// import React from "react";
+// import "../App.less";
+// import { Link } from "react-router-dom";
+// import { GraduateContext } from "../context/graduate-context";
+// import {
+//   PageHeader,
+//   Collapse,
+//   Divider,
+//   Button,
+//   Tag,
+//   Space,
+//   Typography,
+//   Row,
+// } from "antd";
+// import { EllipsisOutlined } from "@ant-design/icons";
+
+// const { useContext } = React;
+// const { Paragraph } = Typography;
+
+// const GraduateProfile = ({ graduate }) => {
+//   //   eslint-disable-next-line no-unused-vars
+//   const [state, dispatch] = useContext(GraduateContext);
+
+//   const { Panel } = Collapse;
+
+//   const Content = ({ children, extraContent }) => (
+//     <Row>
+//       <div style={{ flex: 1 }}>{children}</div>
+//       <div className="image">{extraContent}</div>
+//     </Row>
+//   );
+//   const IconLink = ({ src, text }) => (
+//     <a className="example-link">
+//       <img className="example-link-icon" src={src} alt={text} />
+//       {text}
+//     </a>
+//   );
+//   const content = (
+//     <>
+//       <Space>{graduate.Headline}</Space>
+//       <Paragraph>
+//         Ant Design&#x27;s design team preferred to design with the HSB color
+//         model, which makes it easier for designers to have a clear psychological
+//         expectation of color when adjusting colors, as well as facilitate
+//         communication in teams.
+//       </Paragraph>
+
+//       <div>
+//         <IconLink
+//           src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+//           text="Linkedin"
+//         />
+//         <IconLink
+//           src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
+//           text=" Github"
+//         />
+//         <IconLink
+//           src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+//           text="Website"
+//         />
+//       </div>
+//       <Divider orientation="left">Resume Text</Divider>
+//       <Collapse ghost>
+//         <Panel header="Read Resume" key="1">
+//           <p>{graduate.resume_text}</p>
+//         </Panel>
+//       </Collapse>
+//     </>
+//   );
+
+//   return (
+//     <>
+//       <PageHeader
+//         title={graduate.fullname}
+//         className="site-page-header-ghost-wrapper"
+//         onBack={() => window.history.back()}
+//         subTitle={graduate.current_location}
+//         tags={<Tag color="blue">Running</Tag>}
+//         extra={[
+//           <Link to={`/graduates/edit/${graduate._id}`}><Button key="2">Edit</Button></Link>,
+//           <Button key="1" type="primary">
+//             Delete
+//           </Button>,
+//         ]}
+//       >
+//         <Content>{content}</Content>
+//       </PageHeader>
+//     </>
+//   );
+// };
+
+// export default GraduateProfile;
+
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { GraduateContext } from "../context/graduate-context";
@@ -12,7 +106,7 @@ import {
 
 const { useContext } = React;
 
-const GraduateCard = ({ graduate }) => {
+const GraduateProfile = ({ graduate }) => {
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(GraduateContext);
   const { Meta } = Card;
@@ -29,7 +123,7 @@ const GraduateCard = ({ graduate }) => {
         hoverable
         title={<Title level={3}>{graduate.fullname}</Title>}
         bordered={false}
-        style={{ width: 560, float: "left", margin: 15 }}
+        style={{ width: 800, float: "left", margin: 15 }}
         extra={
           <Link to={`/graduates/${graduate._id}`}>
             <IconFont type="icon-tuichu" style={{ width: "40px" }} />
@@ -102,4 +196,4 @@ const GraduateCard = ({ graduate }) => {
     </div>
   );
 };
-export default GraduateCard;
+export default GraduateProfile;

@@ -33,38 +33,75 @@ function reducer(state, action) {
         graduates: action.payload,
       };
     }
-    case 'FETCH_GRADUATE': {
+    case "FETCH_GRADUATE": {
       return {
         ...state,
         graduate: action.payload,
       };
     }
-    case 'UPDATE_GRADUATE': {
+    case "UPDATE_GRADUATE": {
       const graduate = action.payload;
       return {
         ...state,
-        graduates: state.graduates.map(item =>
+        graduates: state.graduates.map((item) =>
           item._id === graduate._id ? graduate : item,
         ),
         message: {
-          type: 'success',
-          title: 'Update Successful',
-          content: `Graduate "${graduate.email}" has been updated!`,
+          type: "success",
+          title: "Update Successful",
+          content: `Graduate "${graduate.fullname}" has been updated!`,
         },
       };
     }
-    case 'DELETE_GRADUATE': {
-      const { _id, email } = action.payload;
+    case "DELETE_GRADUATE": {
+      const { _id, graduate } = action.payload;
       return {
         ...state,
-        graduates: state.graduates.filter(item => item._id !== _id),
+        graduates: state.graduates.filter((item) => item._id !== _id),
         message: {
-          type: 'success',
-          title: 'Delete Successful',
-          content: `Graduate "${email}" has been deleted!`,
+          type: "success",
+          title: "Delete Successful",
+          content: `Graduate "${graduate.fullname}" has been deleted!`,
         },
       };
     }
+    case "SEARCH_GRADUATES": {
+      const { location, language, checkBoxState } = action.payload;
+      const filteredGraduates = state.graduates
+        .filter((loc) =>
+          loc.current_location.toLowerCase().includes(location.toLowerCase()),
+        )
+        .filter((lang) =>
+          lang.languages.join(" ").toLowerCase().includes(language.toLowerCase()),
+        )
+        .filter((item) =>
+          !!checkBoxState.full_time ? item.full_time === true : true,
+        )
+        .filter((item) =>
+          !!checkBoxState.part_time ? item.part_time === true : true,
+        )
+        .filter((item) =>
+          !!checkBoxState.willing_relocate
+            ? item.willing_relocate === true
+            : true,
+        )
+        .filter((item) =>
+          !!checkBoxState.willing_remote ? item.willing_remote === true : true,
+        )
+        .filter((item) =>
+          !!checkBoxState.internship ? item.internship === true : true,
+        )
+        .filter((item) =>
+          !!checkBoxState.contract ? item.contract === true : true,
+        );
+      return {
+        ...state,
+        filteredGraduates,
+      };
+    }
+    //   default:
+    //     return state;
+    // }
     default:
       throw new Error();
   }

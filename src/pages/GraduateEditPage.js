@@ -3,12 +3,12 @@ import axios from "axios";
 import GraduateAdd from "../components/graduate-add";
 import { flashErrorMessage } from "../components/flash-message";
 import { GraduateContext } from "../context/graduate-context";
-// import useGraduatesData from "../utils/useGraduateData";
 
-const GraduateAddPage = ({ match }) => {
-  // const [graduates] = useGraduatesData();
+
+const GraduateEditPage = ({ match }) => {
   const [state, dispatch] = useContext(GraduateContext);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const { _id } = match.params; // Grab URL _id
@@ -37,7 +37,6 @@ const GraduateAddPage = ({ match }) => {
   if (loading) {
     return <p>Please wait...</p>;
   }
-  // console.log(graduates);
 
   return (
     <div>
@@ -46,4 +45,4 @@ const GraduateAddPage = ({ match }) => {
   );
 };
 
-export default GraduateAddPage;
+export default GraduateEditPage;

@@ -4,6 +4,7 @@ import GraduateList from "../components/graduate-list";
 import { GraduateContext } from "../context/graduate-context";
 import { FlashMessage, flashErrorMessage } from "../components/flash-message";
 import GraduateSearch from "../components/GraduateSearch";
+import { Col } from "antd";
 
 const GraduateHomePage = () => {
   const [state, dispatch] = useContext(GraduateContext);
@@ -22,12 +23,14 @@ const GraduateHomePage = () => {
     };
     fetchData();
   }, [dispatch]);
-
+  console.log(state);
   return (
-    <div>
-      <GraduateSearch />
-      {state.message.content && <FlashMessage message={state.message} />}
-      <GraduateList graduates={state.graduates} />
+    <div style={{ padding: "0 40px" }}>
+      <Col>
+        <GraduateSearch />
+        {state.message.content && <FlashMessage message={state.message} />}
+        <GraduateList graduates={state.filteredGraduates || state.graduates} />
+      </Col>
     </div>
   );
 };

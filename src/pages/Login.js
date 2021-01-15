@@ -12,7 +12,7 @@ export default function Login() {
           <span>Graduates Directory</span>
 
           <div className="login-container">
-            <a className="login-link" href="http://localhost:3030/oauth/github">
+            <a className="login-link" href="https://dev-vc07k-6y.us.auth0.com/login">
               <GithubIcon />
               <span>Login with GitHub</span>
             </a>

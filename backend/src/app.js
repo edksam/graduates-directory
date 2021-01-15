@@ -4,12 +4,12 @@ const compress = require("compression");
 const helmet = require("helmet");
 const cors = require("cors");
 const logger = require("./logger");
+const multer = require("multer");
 
 const feathers = require("@feathersjs/feathers");
 const configuration = require("@feathersjs/configuration");
 const express = require("@feathersjs/express");
 const socketio = require("@feathersjs/socketio");
-
 
 const middleware = require("./middleware");
 const services = require("./services");
@@ -18,16 +18,18 @@ const channels = require("./channels");
 
 const mongoose = require("./mongoose");
 
-const authentication = require('./authentication');
+const authentication = require("./authentication");
 
 const app = express(feathers());
 
 // Load app configuration
 app.configure(configuration());
 // Enable security, CORS, compression, favicon and body parsing
-app.use(helmet({
-  contentSecurityPolicy: false
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(cors());
 app.use(compress());
 app.use(express.json());
@@ -55,5 +57,23 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
+
+//multer
+//File Upload localStorage
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./uploads");
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  },
+});
+var upload = multer({ storage: storage }).single("file");
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});
+
+
+
 
 module.exports = app;
