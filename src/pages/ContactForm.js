@@ -1,17 +1,7 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
-import * as emailjs from "emailjs-com";
-import {
-  Field,
-  Label,
-  Control,
-  Input,
-  Button,
-  Icon,
-  Textarea,
-  Notification,
-} from "rbx";
+import emailjs from "emailjs-com";
 
 class ContactForm extends React.PureComponent {
   constructor(props) {
@@ -27,7 +17,6 @@ class ContactForm extends React.PureComponent {
     this.resetForm = this.resetForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
 
   handleSubmit(event) {
     event.preventDefault();
@@ -47,8 +36,8 @@ class ContactForm extends React.PureComponent {
     );
     this.resetForm();
     // return <Redirect to="/" />;
-    const {history} = this.props
-    history.push("/")
+    const { history } = this.props;
+    history.push("/");
   }
 
   resetForm() {
@@ -60,7 +49,6 @@ class ContactForm extends React.PureComponent {
     });
   }
 
-
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -71,62 +59,48 @@ class ContactForm extends React.PureComponent {
     return (
       <div>
         <form onSubmit={this.handleSubmit} style={{ padding: "40px" }}>
-          <Field>
-            <Label>Name</Label>
-            <Control>
-              <Input
-                name="name"
-                type="text"
-                placeholder="Your first and last name"
-                value={name}
-                onChange={this.handleChange}
-              />
-            </Control>
-          </Field>
-          <Field>
-            <Label>Email for contact</Label>
-            <Control>
-              <Input
-                name="email"
-                type="email"
-                placeholder="email@gmail.com"
-                value={email}
-                onChange={this.handleChange}
-              />
-            </Control>
-          </Field>
-          <Field>
-            <Label>Subject</Label>
-            <Control>
-              <Input
-                name="subject"
-                type="text"
-                placeholder="What is the subject?"
-                value={subject}
-                onChange={this.handleChange}
-              />
-            </Control>
-          </Field>
-          <Field>
-            <Label>Message</Label>
-            <Control>
-              <Textarea
-                name="message"
-                placeholder="Tell me more about..."
-                value={message}
-                onChange={this.handleChange}
-              />
-            </Control>
-          </Field>
+          <label>Name</label>
 
-          <Field kind="group">
-            <Control>
-              <Button color="dark">Send</Button>
-            </Control>
-            <Control>
-              <Button text>Cancel</Button>
-            </Control>
-          </Field>
+          <input
+            name="name"
+            type="text"
+            placeholder="Your first and last name"
+            value={name}
+            onChange={this.handleChange}
+          />
+
+          <label>Email for contact</label>
+
+          <input
+            name="email"
+            type="email"
+            placeholder="email@gmail.com"
+            value={email}
+            onChange={this.handleChange}
+          />
+
+          <label>Subject</label>
+
+          <input
+            name="subject"
+            type="text"
+            placeholder="What is the subject?"
+            value={subject}
+            onChange={this.handleChange}
+          />
+
+          <label>Message</label>
+
+          <textarea
+            name="message"
+            placeholder="Tell me more about..."
+            value={message}
+            onChange={this.handleChange}
+          />
+
+          <button color="dark">Send</button>
+
+          <button text>Cancel</button>
         </form>
       </div>
     );
