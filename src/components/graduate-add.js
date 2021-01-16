@@ -2,9 +2,15 @@ import React, { useContext, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { inputField } from "../pages/Inputs";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { GraduateContext } from "../context/graduate-context";
 import { flashErrorMessage } from "./flash-message";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+// import { Editor } from "react-draft-wysiwyg";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import parse from "html-react-parser";
+// import "react-quill/dist/quill.bubble.css";
 import {
   Layout,
   Divider,
@@ -17,7 +23,7 @@ import {
   message,
   Input,
 } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+
 // import useGraduatesData from "../utils/useGraduateData";
 
 const GraduateAdd = ({ graduate }) => {
@@ -81,26 +87,6 @@ const GraduateAdd = ({ graduate }) => {
   if (redirect) {
     return <Redirect to="/" />;
   }
-
-  //File upload
-  const { Dragger } = Upload;
-
-  const props = {
-    name: "file",
-    multiple: true,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
 
   const layout = {
     labelCol: {
@@ -376,34 +362,49 @@ const GraduateAdd = ({ graduate }) => {
               </div>
             </Space>
             <Divider />
-            <div className="input-group">
-              <Dragger {...props}>
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">
-                  Click or drag your CV to this area to upload
-                </p>
-                <p className="ant-upload-hint">
-                  Support for a single or bulk upload.
-                </p>
-              </Dragger>
-            </div>
+
             <Divider />
             <div className="input-group">
               <label className="label">Resume Text</label>
-              <Controller
+              {/* <Controller
                 as={<TextArea showCount maxLength={2000} rows={20} />}
                 name="resume_text"
                 control={control}
                 defaultValue=""
+              /> */}
+
+              <Controller
+                control={control}
+                name="resume_text"
+                // rules={{
+                //   validate: (value) =>
+                //     wordCounter(value) >= 10 ||
+                //     "Enter at least 10 words in the description",
+                // }}
+                error={errors.description}
+                render={({ onChange, onBlur, value }) => (
+                  <ReactQuill
+                    theme="snow"
+                    onChange={(description, delta, source, editor) =>
+                      onChange(description)
+                    }
+                    control={control}
+                    style={{ height: "500px" }}
+                    value={value}
+                  />
+                )}
               />
             </div>
-            <Divider />
 
-            <Button type="primary" htmlType="submit">
-              Register
-            </Button>
+            <Divider />
+            <Space>
+              <Button type="primary" htmlType="submit">
+                Save
+              </Button>
+              {/* <Button type="primary" onClick={handleCancel}>
+                Cancel
+              </Button> */}
+            </Space>
           </form>
         </Col>
       </Row>

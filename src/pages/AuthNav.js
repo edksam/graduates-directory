@@ -4,10 +4,6 @@ import React from "react";
 import AuthenticationButton from "./AuthenticationButton";
 import { Menu } from "antd";
 
-const AuthNav = () => (
-  <Menu.Item>
-    <AuthenticationButton />
-  </Menu.Item>
-);
+const AuthNav = () => <AuthenticationButton />;
 
 export default AuthNav;

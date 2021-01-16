@@ -49,19 +49,19 @@ function reducer(state, action) {
         message: {
           type: "success",
           title: "Update Successful",
-          content: `Graduate "${graduate.fullname}" has been updated!`,
+          content: `Graduate "${graduate._id}" has been updated!`,
         },
       };
     }
     case "DELETE_GRADUATE": {
-      const { _id, graduate } = action.payload;
+      const { _id } = action.payload;
       return {
         ...state,
         graduates: state.graduates.filter((item) => item._id !== _id),
         message: {
           type: "success",
           title: "Delete Successful",
-          content: `Graduate "${graduate.fullname}" has been deleted!`,
+          content: `Graduate has been deleted!`,
         },
       };
     }
@@ -72,7 +72,10 @@ function reducer(state, action) {
           loc.current_location.toLowerCase().includes(location.toLowerCase()),
         )
         .filter((lang) =>
-          lang.languages.join(" ").toLowerCase().includes(language.toLowerCase()),
+          lang.languages
+            .join(" ")
+            .toLowerCase()
+            .includes(language.toLowerCase()),
         )
         .filter((item) =>
           !!checkBoxState.full_time ? item.full_time === true : true,
