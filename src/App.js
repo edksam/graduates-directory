@@ -6,6 +6,7 @@ import GraduateHomePage from "./pages/graduate-home-page";
 import GraduateAddPage from "./pages/graduate-add-page";
 import GraduateListPage from "./pages/GraduateListPage";
 import GraduateProfilePage from "./pages/GraduateProfilePage";
+import GraduateInfoPage from "./pages/GraduateInfoPage";
 
 import NotFound from "./pages/NotFound";
 import ContactForm from "./pages/ContactForm";
@@ -38,6 +39,7 @@ const App = () => {
           <Route exact path="/graduates/new" component={GraduateAddPage} />
           <Route path="/graduates/edit/:_id" component={GraduateAddPage} />
           <Route exact path="/graduates/:_id" component={GraduateProfilePage} />
+          <Route exact path="/graduates/preview/:_id" component={GraduateInfoPage} />
           <Route exact path="/contact" component={ContactForm} />
 
           <Route>

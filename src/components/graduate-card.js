@@ -41,7 +41,7 @@ const GraduateCard = ({ graduate }) => {
         bordered={false}
         style={{ width: 560, float: "left", margin: 15 }}
         extra={
-          <Link to={`/graduates/${graduate._id}`}>
+          <Link to={`/graduates/preview/${graduate._id}`}>
             <IconFont type="icon-tuichu" style={{ width: "40px" }} />
           </Link>
         }
