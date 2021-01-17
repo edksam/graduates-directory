@@ -39,7 +39,7 @@ const GraduateCard = ({ graduate }) => {
         hoverable
         title={<Title level={3}>{graduate.fullname}</Title>}
         bordered={false}
-        style={{ width: 560, float: "left", margin: 15 }}
+        style={{ width: 410, marginTop: 15 }}
         extra={
           <Link to={`/graduates/preview/${graduate._id}`}>
             <IconFont type="icon-tuichu" style={{ width: "40px" }} />
@@ -51,29 +51,28 @@ const GraduateCard = ({ graduate }) => {
           description={graduate.current_location}
         />
         <hr />
-        <p>{graduate.languages} </p>
-        <Space>
+        <p>
+          Language:{""} {graduate.languages}{" "}
+        </p>
+        <Divider orientation="left">Work Availability</Divider>
+        <Row>
           <p>
-            {/* {graduate.willing_remote ? (
-              <Tag color={"volcano"}>Can't Work Remote</Tag>
-            ) : (
-              <Tag color={"geekblue"}>Can Work Remote</Tag>
-            )} */}
-            <Tag color={"geekblue"}>
-              {graduate.willing_remote && "Open to Remote"}
-            </Tag>
+            {graduate.willing_relocate && (
+              <Tag color={"magenta"}>Open To Relocate</Tag>
+            )}
           </p>
+          <p>
+            {graduate.willing_remote && (
+              <Tag color={"geekblue"}>Open To Remote</Tag>
+            )}
+          </p>
+          <p>{graduate.part_time && <Tag color={"purple"}>Part Time</Tag>}</p>
+          <p>{graduate.temp && <Tag color={"green"}>Temp</Tag>}</p>{" "}
+          <p>{graduate.contract && <Tag color={"volcano"}>Contract</Tag>}</p>
+          <p>{graduate.full_time && <Tag color={"green"}>Full Time</Tag>}</p>
+          <p>{graduate.internship && <Tag color={"purple"}>Internship</Tag>}</p>
+        </Row>
 
-          <p>
-            <Tag color={"volcano"}>
-              {graduate.willing_relocate && "Willing to relocate"}
-            </Tag>
-          </p>
-        </Space>
-        <Space>
-          <Tag color={"green"}>{graduate.full_time && "Full Time"}</Tag>
-          <Tag color={"green"}>{graduate.part_time && "Part Time"}</Tag>
-        </Space>
         <Divider orientation="left"></Divider>
         <Row>
           <Space>

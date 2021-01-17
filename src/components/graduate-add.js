@@ -172,6 +172,7 @@ const GraduateAdd = ({ graduate }) => {
                 control={control}
                 defaultValue=""
                 rules={{ required: true }}
+                spellCheck="true"
               />
               {errors.current_location && (
                 <span className="error">This field is required</span>

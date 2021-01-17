@@ -49,7 +49,7 @@ const GraduateSearch = () => {
         checkBoxState,
       },
     });
-  }, [state.graduates,location, language, checkBoxState]);
+  }, [state.graduates, location, language, checkBoxState]);
 
   //fecth Data normal
 
@@ -96,6 +96,12 @@ const GraduateSearch = () => {
                   placeholder="Current Location"
                   onChange={handleLocation}
                   checked={location}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Input something!",
+                    },
+                  ]}
                 />
               </Form.Item>
             </Col>
