@@ -32,11 +32,10 @@ module.exports = function (app) {
         },
       ],
       willing_relocate: {
-        type: String,
+        type: Boolean,
       },
       email: {
-        type: mongooseClient.SchemaTypes.Email,
-        required: [true, "Email is required"],
+        type: String,
       },
       mobile: {
         type: Number,
@@ -45,22 +44,22 @@ module.exports = function (app) {
         type: Buffer,
       },
       full_time: {
-        type: String,
+        type: Boolean,
       },
       part_time: {
-        type: String,
+        type: Boolean,
       },
       contract: {
-        type: String,
+        type: Boolean,
       },
       willing_remote: {
-        type: String,
+        type: Boolean,
       },
       internship: {
-        type: String,
+        type: Boolean,
       },
       temp: {
-        type: String,
+        type: Boolean,
       },
       linkedin: {
         type: String,

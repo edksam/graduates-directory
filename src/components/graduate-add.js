@@ -1,59 +1,38 @@
 import React, { useContext, useState } from "react";
-import {
-  Layout,
-  Input,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Button,
-  Checkbox,
-  Space,
-} from "antd";
-import { useForm } from "react-hook-form";
-import classnames from "classnames";
+import { useForm, Controller } from "react-hook-form";
+import { inputField } from "../pages/Inputs";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { GraduateContext } from "../context/graduate-context";
 import { flashErrorMessage } from "./flash-message";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+// import { Editor } from "react-draft-wysiwyg";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import parse from "html-react-parser";
+// import "react-quill/dist/quill.bubble.css";
+import {
+  Layout,
+  Divider,
+  Row,
+  Button,
+  Space,
+  Checkbox,
+  Col,
+  Upload,
+  message,
+  Input,
+} from "antd";
 
-//Form Layout
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
+// import useGraduatesData from "../utils/useGraduateData";
+
 const GraduateAdd = ({ graduate }) => {
+  // const [graduates] = useGraduatesData();
   const [state, dispatch] = useContext(GraduateContext);
   const [redirect, setRedirect] = useState(false);
-  const { register, handleSubmit } = useForm({
+  const { control, errors, handleSubmit, reset } = useForm({
     defaultValues: graduate,
   });
-  // const onSubmit = (data) => console.log("data");
-
-  const { TextArea } = Input;
-  //Form logic
-  // const onFinish = (values) => {
-  //   console.log("Success:", values);
-  // };
-
-  // const onFinishFailed = (errorInfo) => {
-  //   console.log("Failed:", errorInfo);
-  // };
-
-  //Checkboxes
-  // function onChange(checkedValues) {
-  //   console.log("checked = ", checkedValues);
-  // }
 
   const createGraduate = async (data) => {
     try {
@@ -69,7 +48,17 @@ const GraduateAdd = ({ graduate }) => {
     } catch (error) {
       flashErrorMessage(dispatch, error);
     }
+    console.log(data);
   };
+  // console.log(graduates);
+
+  // const onSubmit = async (data) => {
+  //   await createGraduate(data);
+  // };
+
+  if (redirect) {
+    return <Redirect to="/" />;
+  }
 
   const updateGraduate = async (data) => {
     try {
@@ -99,6 +88,22 @@ const GraduateAdd = ({ graduate }) => {
     return <Redirect to="/" />;
   }
 
+  const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
+  const tailLayout = {
+    wrapperCol: {
+      offset: 8,
+      span: 16,
+    },
+  };
+  const { TextArea } = Input;
+
   return (
     <Layout>
       <Divider orientation="left">
@@ -106,184 +111,301 @@ const GraduateAdd = ({ graduate }) => {
           {graduate._id ? "Edit Your Profile" : "Add Your Profile"}
         </h1>
       </Divider>
-      <Row style={{ width: "100%" }}>
-        <Col span={16}>
-          <Form
+      <Row style={{ width: "60%" }} wrap={false}>
+        <Col flex="none">
+          <div style={{ padding: "0 40px" }}></div>
+        </Col>
+        <Col flex="auto">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            loading={state.loading}
             {...layout}
             name="basic"
             initialValues={{
               remember: true,
             }}
-            onSubmit={handleSubmit(onSubmit)}
-            loading={state.loading}
-            layout="horizontal"
-            style={{ marginLeft: 30 }}
           >
-            <Form.Item
-              htmlFor="fullname"
-              label="Full Name"
-              name="fullname"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your full name!",
-                },
-              ]}
-            >
-              <Input type="text" ref={register} id="fullname" name="fullname" />
-            </Form.Item>
-
-            <Form.Item
-              htmlFor="headline"
-              label="Headline"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your headline!",
-                },
-              ]}
-            >
-              <Input type="text" id="headline" name="headline" ref={register} />
-            </Form.Item>
-            <Form.Item
-              htmlFor="current_location"
-              label="Current Location"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your current Location!",
-                },
-              ]}
-            >
-              <Input
-              type="text"
-                placeholder="Current Location"
-                id="current_location"
-                name="current_location"
-                ref={register}
+            <div className="input-group">
+              <label className="label">Full Name</label>
+              <Controller
+                as={inputField("fullname")}
+                name="fullname"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
               />
-            </Form.Item>
-            <Form.Item
-              htmlFor="languages"
-              label="Language"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your languages!",
-                },
-              ]}
-            >
-              <Input
-              type="text"
-                placeholder="Enter your languages"
-                id="languages"
+              {errors.fullname && (
+                <span className="error">This field is required</span>
+              )}
+            </div>
+            <div className="input-group">
+              <label className="label">Headline</label>
+              <Controller
+                as={inputField("headline")}
+                name="headline"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
+              />
+              {errors.headline && (
+                <span className="error">This field is required</span>
+              )}
+            </div>
+            <div className="input-group">
+              <label className="label">Language</label>
+              <Controller
+                as={inputField("languages")}
                 name="languages"
-                ref={register}
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
               />
-            </Form.Item>
-
-            <Divider orientation="left">Work Type</Divider>
+              {errors.languages && (
+                <span className="error">This field is required</span>
+              )}
+            </div>
+            <div className="input-group">
+              <label className="label">Current Location</label>
+              <Controller
+                as={inputField("current_location")}
+                name="current_location"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
+              />
+              {errors.current_location && (
+                <span className="error">This field is required</span>
+              )}
+            </div>
+            <Divider orientation="left">Work Types</Divider>
             <Space>
-              <Col>
-                <Row>
-                  <Checkbox type="checkbox" id="fulltime" name="full_time" ref={register}>
-                    Full Time
-                  </Checkbox>
-
-                  <Checkbox type="checkbox"  id="part_time" name="part_time" ref={register}>
-                    Part Time
-                  </Checkbox>
-
-                  <Checkbox type="checkbox"  id="full_time" name="Internship" ref={register}>
-                    Internship
-                  </Checkbox>
-                </Row>
-              </Col>
-            </Space>
-            <Space>
-              <Col>
-                <Row>
-                  <Checkbox
-                  type="checkbox"
-                    id="willing_remote"
-                    name="willing_remote"
-                    ref={register}
-                  >
-                    Remote
-                  </Checkbox>
-
-                  <Checkbox
-                  type="checkbox"
-                    id="willing_relocate"
+              <Row>
+                <div className="input-group">
+                  <Controller
+                    control={control}
+                    name="full_time"
+                    render={({ onChange, onBlur, value, name, ref }) => (
+                      <Checkbox
+                        onBlur={onBlur}
+                        onChange={(e) => onChange(e.target.checked)}
+                        checked={value}
+                        inputRef={ref}
+                        defaultValue={false}
+                      >
+                        Full Time
+                      </Checkbox>
+                    )}
+                  />
+                </div>
+                <div className="input-group">
+                  <Controller
+                    control={control}
+                    name="part_time"
+                    render={({ onChange, onBlur, value, name, ref }) => (
+                      <Checkbox
+                        onBlur={onBlur}
+                        onChange={(e) => onChange(e.target.checked)}
+                        checked={value}
+                        inputRef={ref}
+                        defaultValue={false}
+                      >
+                        Part Time
+                      </Checkbox>
+                    )}
+                  />
+                </div>
+                <div className="input-group">
+                  <Controller
+                    control={control}
                     name="willing_relocate"
-                    ref={register}
-                  >
-                    Relocate
-                  </Checkbox>
-
-                  <Checkbox type="checkbox"  id="temp" name="temp" ref={register}>
-                    Temp
-                  </Checkbox>
-                  <Checkbox type="checkbox" id="contract" name="contract" ref={register}>
-                    Contract
-                  </Checkbox>
-                </Row>
-              </Col>
+                    render={({ onChange, onBlur, value, name, ref }) => (
+                      <Checkbox
+                        onBlur={onBlur}
+                        onChange={(e) => onChange(e.target.checked)}
+                        checked={value}
+                        inputRef={ref}
+                        defaultValue={false}
+                      >
+                        Relocate
+                      </Checkbox>
+                    )}
+                  />
+                </div>
+                <div className="input-group">
+                  <Controller
+                    control={control}
+                    name="willing_remote"
+                    render={({ onChange, onBlur, value, name, ref }) => (
+                      <Checkbox
+                        onBlur={onBlur}
+                        onChange={(e) => onChange(e.target.checked)}
+                        checked={value}
+                        inputRef={ref}
+                        defaultValue={false}
+                      >
+                        Remote
+                      </Checkbox>
+                    )}
+                  />
+                </div>
+                <div className="input-group">
+                  <Controller
+                    control={control}
+                    name="internship"
+                    render={({ onChange, onBlur, value, name, ref }) => (
+                      <Checkbox
+                        onBlur={onBlur}
+                        onChange={(e) => onChange(e.target.checked)}
+                        checked={value}
+                        inputRef={ref}
+                        defaultValue={false}
+                      >
+                        Internship
+                      </Checkbox>
+                    )}
+                  />
+                </div>
+              </Row>
+              <br />
+              <Row>
+                <div className="input-group">
+                  <Controller
+                    control={control}
+                    name="contract"
+                    render={({ onChange, onBlur, value, name, ref }) => (
+                      <Checkbox
+                        onBlur={onBlur}
+                        onChange={(e) => onChange(e.target.checked)}
+                        checked={value}
+                        inputRef={ref}
+                        defaultValue={false}
+                      >
+                        Contract
+                      </Checkbox>
+                    )}
+                  />
+                </div>
+                <div className="input-group">
+                  <Controller
+                    control={control}
+                    name="temp"
+                    render={({ onChange, onBlur, value, name, ref }) => (
+                      <Checkbox
+                        onBlur={onBlur}
+                        onChange={(e) => onChange(e.target.checked)}
+                        checked={value}
+                        inputRef={ref}
+                        defaultValue={false}
+                      >
+                        Temp
+                      </Checkbox>
+                    )}
+                  />
+                </div>
+              </Row>
             </Space>
-            <br />
-            <br />
-            <Form.Item htmlFor="website" label="Website" name="website">
-              <Input type="text"  ref={register} id="website" name="website" />
-            </Form.Item>
-            <Form.Item htmlFor="likedin" label="Linkedin url" name="linkedin">
-              <Input type="text" ref={register} id="linkedin" name="linked" />
-            </Form.Item>
-            <Form.Item htmlFor="github" label="Github Handle" name="github">
-              <Input type="text" ref={register} id="github" name="github" />
-            </Form.Item>
-            <Divider orientation="left">Hidden Details</Divider>
+
+            <Divider orientation="left">Work Media</Divider>
             <Space>
-              <Form.Item htmlFor="email" label="Email Address" name="email">
-                <Input
-                type="text"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  ref={register}
+              <div className="input-group">
+                <label className="label">Website</label>
+                <Controller
+                  as={inputField("Website")}
+                  name="website"
+                  control={control}
+                  defaultValue=""
                 />
-              </Form.Item>
-              <Form.Item htmlFor="mobile" label="Mobile Number" name="mobile">
-                <Input
-                  type="text"
-                  id="mobile"
-                  name="mobile"
-                  placeholder="Mobile Number"
-                  ref={register}
+              </div>
+              <div className="input-group">
+                <label className="label">Linkedin</label>
+                <Controller
+                  as={inputField("linkedin")}
+                  name="linkedin"
+                  control={control}
+                  defaultValue=""
                 />
-              </Form.Item>
+              </div>
+              <div className="input-group">
+                <label className="label">Github Link</label>
+                <Controller
+                  as={inputField("github")}
+                  name="github"
+                  control={control}
+                  defaultValue=""
+                />
+              </div>
             </Space>
-            <br />
-            <br />
-            <Divider orientation="left">Resume Text</Divider>
-            <Col style={{}}>
-              <TextArea
-                type="text"
-                id="resume_text"
-                name="resume_text"
-                placeholder="Resume Text"
-                ref={register}
-                showCount
-                maxLength={2000}
-                rows={20}
-              />
-            </Col>
+            <Divider orientation="left">Private Details</Divider>
+            <Space>
+              <div className="input-group">
+                <label className="label">Mobile</label>
+                <Controller
+                  as={inputField("Mobile Number")}
+                  name="mobile"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                />
+                {errors.languages && (
+                  <span className="error">Please enter your mobile number</span>
+                )}
+              </div>
 
-            <Form.Item {...tailLayout}>
-              <Button type="submit" htmlType="submit">
-                Submit
+              <div className="input-group">
+                <label className="label">Email</label>
+                <Controller
+                  as={inputField("Email")}
+                  name="Email"
+                  control={control}
+                  defaultValue=""
+                />
+              </div>
+            </Space>
+            <Divider />
+
+            <Divider />
+            <div className="input-group">
+              <label className="label">Resume Text</label>
+              {/* <Controller
+                as={<TextArea showCount maxLength={2000} rows={20} />}
+                name="resume_text"
+                control={control}
+                defaultValue=""
+              /> */}
+
+              <Controller
+                control={control}
+                name="resume_text"
+                // rules={{
+                //   validate: (value) =>
+                //     wordCounter(value) >= 10 ||
+                //     "Enter at least 10 words in the description",
+                // }}
+                error={errors.description}
+                render={({ onChange, onBlur, value }) => (
+                  <ReactQuill
+                    theme="snow"
+                    onChange={(description, delta, source, editor) =>
+                      onChange(description)
+                    }
+                    control={control}
+                    style={{ height: "500px" }}
+                    value={value}
+                  />
+                )}
+              />
+            </div>
+
+            <Divider />
+            <Space>
+              <Button type="primary" htmlType="submit">
+                Save
               </Button>
-            </Form.Item>
-          </Form>
+              {/* <Button type="primary" onClick={handleCancel}>
+                Cancel
+              </Button> */}
+            </Space>
+          </form>
         </Col>
       </Row>
     </Layout>
