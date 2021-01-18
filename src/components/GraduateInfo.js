@@ -21,7 +21,7 @@ import {
   LinkedinOutlined,
   FilePdfOutlined,
   GlobalOutlined,
-  DownloadOutlined,
+ 
 } from "@ant-design/icons";
 
 const { useContext } = React;
@@ -29,12 +29,14 @@ const { useContext } = React;
 const GraduateInfo = ({ graduate }) => {
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(GraduateContext);
-
   const { Meta } = Card;
-
   const { Title } = Typography;
-
   const pdfChange = () => {
+    const { htmlToText } = require("html-to-text");
+    const text = htmlToText(graduate.resume_text, {
+      wordwrap: 130,
+    });
+
     var doc = new jsPDF();
     doc.autoTable({ graduate });
     doc.autoTable({
@@ -53,7 +55,7 @@ const GraduateInfo = ({ graduate }) => {
         // [graduate.resume_textarea]
         [
           {
-            content: graduate.resume_text,
+            content: text,
             styles: { halign: "left" },
             font: "helvetica",
           },
@@ -65,29 +67,24 @@ const GraduateInfo = ({ graduate }) => {
 
   return (
     <>
-      <div className="site-page-header-ghost-wrapper">
-        <PageHeader
-          ghost={false}
-          level={3}
-          onBack={() => window.history.back()}
-          title={graduate.fullname}
-          subTitle={graduate.current_location}
-          extra={[]}
-        >
-          <Descriptions size="small" column={3}>
-            <Descriptions.Item label="Profile Created">
-              : {graduate.createdAt}
-            </Descriptions.Item>
-            {/*
-            <Descriptions.Item label="Creation Time">
-              2017-01-10
-            </Descriptions.Item>
-            <Descriptions.Item label="Effective Time">
-              2017-10-10
-            </Descriptions.Item> */}
-          </Descriptions>
-        </PageHeader>
-      </div>
+      {/* <div className="site-page-header-ghost-wrapper"> */}
+      <PageHeader
+        ghost={false}
+        style={{ width: 600 }}
+        level={3}
+        onBack={() => window.history.back()}
+        title={graduate.fullname}
+        subTitle={graduate.current_location}
+        extra={[]}
+      >
+        <Descriptions size="small" column={3}>
+          <Descriptions.Item label="Profile Created">
+            : {graduate.createdAt}
+          </Descriptions.Item>
+
+        </Descriptions>
+      </PageHeader>
+      {/* </div> */}
       <Row>
         <Col span={12} offset={6}>
           <Card
@@ -96,11 +93,6 @@ const GraduateInfo = ({ graduate }) => {
             bordered={false}
             style={{ width: 800, marginTop: 20 }}
 
-            //   extra={
-            //     <Link to={`/graduates/${graduate._id}`}>
-            //       <IconFont type="icon-tuichu" style={{ width: "40px" }} />
-            //     </Link>
-            //   }
           >
             <Meta
               title={graduate.headline}

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import GraduateList from "../components/graduate-list";
+import GraduatePortalList from "../components/GraduatePortalList";
 import { GraduateContext } from "../context/graduate-context";
 import { FlashMessage, flashErrorMessage } from "../components/flash-message";
 
@@ -25,7 +25,7 @@ const GraduateListPage = () => {
   return (
     <div>
       {state.message.content && <FlashMessage message={state.message} />}
-      <GraduateList graduates={state.graduates} />
+      <GraduatePortalList graduates={state.graduates} />
     </div>
   );
 };

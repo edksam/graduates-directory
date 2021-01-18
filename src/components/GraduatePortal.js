@@ -22,7 +22,7 @@ import parse from "html-react-parser";
 
 const { useContext } = React;
 
-const GraduateCard = ({ graduate }) => {
+const GraduatePortal = ({ graduate }) => {
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(GraduateContext);
   const { Meta } = Card;
@@ -39,9 +39,9 @@ const GraduateCard = ({ graduate }) => {
         hoverable
         title={<Title level={3}>{graduate.fullname}</Title>}
         bordered={false}
-        style={{ width: 390, margin: 15, maxHeight: 1200}}
+        style={{ width: 390, margin: 15,maxHeight: 1200}}
         extra={
-          <Link to={`/graduates/preview/${graduate._id}`}>
+          <Link to={`/graduates/${graduate._id}`}>
             <IconFont type="icon-tuichu" style={{ width: "40px" }} />
           </Link>
         }
@@ -76,7 +76,7 @@ const GraduateCard = ({ graduate }) => {
         <Divider orientation="left"></Divider>
         <Row>
           <Space>
-            <a href={graduate.github_username}>
+            <a href={graduate.githubId}>
               <GithubOutlined
                 style={{ FontSize: "60px", color: "black", width: "10rem" }}
               />
@@ -118,4 +118,4 @@ const GraduateCard = ({ graduate }) => {
     </div>
   );
 };
-export default GraduateCard;
+export default GraduatePortal;

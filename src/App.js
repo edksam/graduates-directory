@@ -39,14 +39,10 @@ const App = () => {
           />
           <Route exact path="/graduates/new" component={GraduateAddPage} />
           <Route path="/graduates/edit/:_id" component={GraduateAddPage} />
-          <Route exact path="/graduates/:_id" component={GraduateProfilePage} />
-          <Route
-            exact
-            path="/graduates/preview/:_id"
-            component={GraduateInfoPage}
-          />
+          <Route path="/graduates/:_id" component={GraduateProfilePage} />
+          {/* <Route path="/graduates/:_id" component={GraduateProfilePage} />{" "} */}
+          <Route  path="/graduates/preview/:_id" component={GraduateInfoPage} />
           <Route exact path="/contact" component={ContactForm} />
-
           <Route>
             <NotFound />
           </Route>

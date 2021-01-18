@@ -1,11 +1,11 @@
 import React from "react";
-import GraduateCard from "./graduate-card";
+import GraduatePortal from "./GraduatePortal";
 import { Row } from "antd";
 
-const GraduateList = ({ graduates }) => {
+const GraduatePortalList = ({ graduates }) => {
   const cards = () => {
     return graduates.map((graduate) => {
-      return <GraduateCard key={graduate._id} graduate={graduate} />;
+      return <GraduatePortal key={graduate._id} graduate={graduate} />;
     });
   };
   return (
@@ -17,4 +17,4 @@ const GraduateList = ({ graduates }) => {
   );
 };
 
-export default GraduateList;
+export default GraduatePortalList;
