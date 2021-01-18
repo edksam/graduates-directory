@@ -1,10 +1,10 @@
 {
   "host": "https://cyf-grad-directory.herokuapp.com/",
   "port": "PORT",
-    "public": "../public/",
+  "public": "../public/",
   "paginate": {
     "default": 50,
     "max": 50
   },
-  "mongodb": "mongodb+srv://cyf_user:TeamBeau1@cyf.9ybko.mongodb.net/graduatesdb?retryWrites=true&w=majority",
+  "mongodb": "mongodb+srv://cyf_user:TeamBeau1@cyf.9ybko.mongodb.net/graduatesdb?retryWrites=true&w=majority"
 }
