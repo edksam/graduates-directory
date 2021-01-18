@@ -1,17 +1,20 @@
-/* eslint-disable no-console */
-const logger = require("./logger");
-const app = require("./app");
-const port = process.env.PORT || app.get("port");
-const server = process.env.PORT || app.listen(port);
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+import App from "./App";
+import { GraduateContextProvider } from "./context/graduate-context";
+import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
 
-process.on("unhandledRejection", (reason, p) =>
-  logger.error("Unhandled Rejection at: Promise ", p, reason)
-);
-
-server.on("listening", () =>
-  logger.info(
-    "Feathers application started on http://%s:%d",
-    app.get("host"),
-    port
-  )
+ReactDOM.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <GraduateContextProvider>
+        <Auth0ProviderWithHistory>
+          <App />
+        </Auth0ProviderWithHistory>
+      </GraduateContextProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
+  document.getElementById("root"),
 );

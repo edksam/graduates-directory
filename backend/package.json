@@ -1,70 +1,69 @@
 {
-  "name": "graduates-directory",
-  "version": "0.1.0",
+  "name": "backend",
+  "description": "Graduates API server",
+  "version": "0.0.0",
+  "homepage": "",
   "private": true,
-  "dependencies": {
-    "@ant-design/icons": "^4.3.0",
-    "@auth0/auth0-react": "^1.2.0",
-    "@craco/craco": "^6.0.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "antd": "^4.10.0",
-    "axios": "^0.21.1",
-    "classnames": "^2.2.6",
-    "craco-less": "^1.17.1",
-    "dotenv": "^8.2.0",
-    "draft-js": "^0.11.7",
-    "emailjs-com": "^2.6.4",
-    "fomantic-ui-css": "^2.8.7",
-    "html-react-parser": "^1.2.1",
-    "html-to-text": "^6.0.0",
-    "jspdf": "^2.3.0",
-    "jspdf-autotable": "^3.5.13",
-    "mdi-react": "^7.4.0",
-    "moment": "^2.29.1",
-    "rbx": "^2.2.0",
-    "react": "^17.0.1",
-    "react-country-region-selector": "^3.0.1",
-    "react-dom": "^17.0.1",
-    "react-draft-wysiwyg": "^1.14.5",
-    "react-hook-form": "^6.13.1",
-    "react-hook-form-input": "^1.1.10",
-    "react-quill": "^1.3.5",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "react-select": "^3.1.1",
-    "semantic-ui-react": "^2.0.1",
-    "styled-components": "^5.2.1",
-    "sweetalert2": "^10.13.0",
-    "web-vitals": "^0.2.4"
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "edksam",
+    "email": "paakofisam.sam@gmail.com"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/",
+    "config": "config/"
+  },
+  "engines": {
+    "node": "^15.0.0",
+    "npm": ">= 3.0.0"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "dev": "concurrently \"nodemon server.js\" \"cd backend && npm run start\""
+    "test": "npm run lint && npm run mocha",
+    "lint": "eslint src/. test/. --config .eslintrc.json --fix",
+    "dev": "nodemon src/",
+    "start": "node src/",
+    "mocha": "mocha test/ --recursive --exit",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+  "standard": {
+    "env": [
+      "mocha"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "ignore": []
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "^4.5.11",
+    "@feathersjs/authentication-local": "^4.5.11",
+    "@feathersjs/authentication-oauth": "^4.5.11",
+    "@feathersjs/configuration": "^4.5.11",
+    "@feathersjs/errors": "^4.5.11",
+    "@feathersjs/express": "^4.5.11",
+    "@feathersjs/feathers": "^4.5.11",
+    "@feathersjs/socketio": "^4.5.11",
+    "@feathersjs/transport-commons": "^4.5.11",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "feathers-mongoose": "^8.3.1",
+    "helmet": "^4.2.0",
+    "mongodb-core": "^3.2.7",
+    "mongoose": "^5.11.8",
+    "mongoose-type-email": "^1.1.2",
+    "multer": "^1.4.2",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "concurrently": "^5.3.0"
+    "axios": "^0.21.1",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.16.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6"
   }
 }
