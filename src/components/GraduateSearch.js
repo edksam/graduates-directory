@@ -1,14 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Form, Row, Col, Input, Checkbox, Card, Divider, Button } from "antd";
-// import useGraduatesData from "../utils/useGraduateData";
-import axios from "axios";
-import GraduateList from "../components/graduate-list";
+import { Form, Row, Col, Input, Checkbox, Card} from "antd";
 import { GraduateContext } from "../context/graduate-context";
-import { FlashMessage, flashErrorMessage } from "../components/flash-message";
+
 
 const GraduateSearch = () => {
   const [state, dispatch] = useContext(GraduateContext);
-  // const [graduates, setGraduates] = useState([]);
 
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
@@ -22,7 +18,6 @@ const GraduateSearch = () => {
     temp: false,
     editVisibles: {},
   };
-  // const [data, setData] = useState([]);
   const [checkBoxState, setCheckboxState] = useState(initialState);
   const {
     full_time,
@@ -34,8 +29,6 @@ const GraduateSearch = () => {
     temp,
   } = checkBoxState;
 
-  // let filteredData = data;
-  // let languageData = data;
 
   useEffect(() => {
     if (state.graduates.length === 0) {
@@ -49,7 +42,7 @@ const GraduateSearch = () => {
         checkBoxState,
       },
     });
-  }, [state.graduates,location, language, checkBoxState]);
+  }, [state.graduates, location, language, checkBoxState, dispatch]);
 
   //fecth Data normal
 
@@ -96,6 +89,12 @@ const GraduateSearch = () => {
                   placeholder="Current Location"
                   onChange={handleLocation}
                   checked={location}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Input something!",
+                    },
+                  ]}
                 />
               </Form.Item>
             </Col>
@@ -185,19 +184,7 @@ const GraduateSearch = () => {
                 textAlign: "right",
               }}
             >
-              {/* <Button type="primary" htmlType="submit">
-            Search
-          </Button>
-          <Button
-            style={{
-              margin: "0 8px",
-            }}
-            onClick={() => {
-              form.resetFields();
-            }}
-          >
-            Clear
-          </Button> */}
+
             </Col>
           </Row>
         </Form>

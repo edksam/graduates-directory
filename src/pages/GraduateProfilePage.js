@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GraduateContext } from "../context/graduate-context";
-import { PageHeader, Button, Descriptions } from "antd";
+
 import GraduateProfile from "../components/gradProfile";
 
 const { useContext } = React;
@@ -23,9 +23,9 @@ const GraduateProfilePage = ({ match }) => {
       });
       setLoading(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params, dispatch]);
-  if (!state.graduate) return "...loading";
+  if (!state.graduate) return loading;
 
   console.log(state.graduate);
   return <GraduateProfile graduate={state.graduate} />;

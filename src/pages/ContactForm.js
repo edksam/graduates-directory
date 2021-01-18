@@ -54,7 +54,7 @@ class ContactForm extends React.PureComponent {
   }
 
   render() {
-    const { name, email, subject, message, sentMessage } = this.state;
+    const { name, email, subject, message } = this.state;
 
     return (
       <div>

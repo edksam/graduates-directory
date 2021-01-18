@@ -2,35 +2,17 @@ import React, { useContext, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { inputField } from "../pages/Inputs";
 import axios from "axios";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { GraduateContext } from "../context/graduate-context";
 import { flashErrorMessage } from "./flash-message";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-// import { Editor } from "react-draft-wysiwyg";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import parse from "html-react-parser";
-// import "react-quill/dist/quill.bubble.css";
-import {
-  Layout,
-  Divider,
-  Row,
-  Button,
-  Space,
-  Checkbox,
-  Col,
-  Upload,
-  message,
-  Input,
-} from "antd";
-
-// import useGraduatesData from "../utils/useGraduateData";
+import { Layout, Divider, Row, Button, Space, Checkbox, Col } from "antd";
 
 const GraduateAdd = ({ graduate }) => {
-  // const [graduates] = useGraduatesData();
   const [state, dispatch] = useContext(GraduateContext);
   const [redirect, setRedirect] = useState(false);
-  const { control, errors, handleSubmit, reset } = useForm({
+  const { control, errors, handleSubmit} = useForm({
     defaultValues: graduate,
   });
 
@@ -50,11 +32,6 @@ const GraduateAdd = ({ graduate }) => {
     }
     console.log(data);
   };
-  // console.log(graduates);
-
-  // const onSubmit = async (data) => {
-  //   await createGraduate(data);
-  // };
 
   if (redirect) {
     return <Redirect to="/" />;
@@ -96,13 +73,6 @@ const GraduateAdd = ({ graduate }) => {
       span: 16,
     },
   };
-  const tailLayout = {
-    wrapperCol: {
-      offset: 8,
-      span: 16,
-    },
-  };
-  const { TextArea } = Input;
 
   return (
     <Layout>
@@ -172,6 +142,7 @@ const GraduateAdd = ({ graduate }) => {
                 control={control}
                 defaultValue=""
                 rules={{ required: true }}
+                spellCheck="true"
               />
               {errors.current_location && (
                 <span className="error">This field is required</span>
@@ -366,21 +337,9 @@ const GraduateAdd = ({ graduate }) => {
             <Divider />
             <div className="input-group">
               <label className="label">Resume Text</label>
-              {/* <Controller
-                as={<TextArea showCount maxLength={2000} rows={20} />}
-                name="resume_text"
-                control={control}
-                defaultValue=""
-              /> */}
-
               <Controller
                 control={control}
                 name="resume_text"
-                // rules={{
-                //   validate: (value) =>
-                //     wordCounter(value) >= 10 ||
-                //     "Enter at least 10 words in the description",
-                // }}
                 error={errors.description}
                 render={({ onChange, onBlur, value }) => (
                   <ReactQuill
@@ -401,9 +360,6 @@ const GraduateAdd = ({ graduate }) => {
               <Button type="primary" htmlType="submit">
                 Save
               </Button>
-              {/* <Button type="primary" onClick={handleCancel}>
-                Cancel
-              </Button> */}
             </Space>
           </form>
         </Col>

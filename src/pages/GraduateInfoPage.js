@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import GraduateInfo from "../components/GraduateInfo";
-// import GraduateAdd from "../components/graduate-add";
+
 import { flashErrorMessage } from "../components/flash-message";
 import { GraduateContext } from "../context/graduate-context";
 

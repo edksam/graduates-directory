@@ -10,8 +10,9 @@ import GraduateInfoPage from "./pages/GraduateInfoPage";
 
 import NotFound from "./pages/NotFound";
 import ContactForm from "./pages/ContactForm";
-import AuthNav from "./pages/AuthNav";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./pages/LoginButton";
+import LogoutButton from "./pages/LogoutButton";
 // import GraduateAdd from "./components/graduate-add";
 
 const { Header, Content, Footer } = Layout;
@@ -38,10 +39,10 @@ const App = () => {
           />
           <Route exact path="/graduates/new" component={GraduateAddPage} />
           <Route path="/graduates/edit/:_id" component={GraduateAddPage} />
-          <Route exact path="/graduates/:_id" component={GraduateProfilePage} />
-          <Route exact path="/graduates/preview/:_id" component={GraduateInfoPage} />
+          <Route path="/graduates/:_id" component={GraduateProfilePage} />
+          {/* <Route path="/graduates/:_id" component={GraduateProfilePage} />{" "} */}
+          <Route  path="/graduates/preview/:_id" component={GraduateInfoPage} />
           <Route exact path="/contact" component={ContactForm} />
-
           <Route>
             <NotFound />
           </Route>
@@ -55,6 +56,7 @@ const App = () => {
 };
 
 const NavBar = () => {
+  const { isAuthenticated } = useAuth0();
   return (
     <>
       <Header>
@@ -65,14 +67,28 @@ const NavBar = () => {
         </Link>
 
         <Menu style={{ float: "right" }} theme="dark" mode="horizontal">
-          <Menu.Item key="2">
-            <Link activeClassName="active" to="/graduates/new">
-              Add Graduate
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="1">
-            <AuthNav />
-          </Menu.Item>
+          {isAuthenticated && (
+            <>
+              <Menu.Item>
+                <Link activeClassName="active" to="/graduates/new">
+                  Add Graduate
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link activeClassName="active" to="/graduates">
+                  Graduates Page
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <LogoutButton />
+              </Menu.Item>
+            </>
+          )}
+          {!isAuthenticated && (
+            <Menu.Item>
+              <LoginButton />
+            </Menu.Item>
+          )}
         </Menu>
       </Header>
     </>

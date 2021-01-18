@@ -7,6 +7,7 @@ import {
   Card,
   Space,
   Tag,
+  Col,
   Row,
   Divider,
   Typography,
@@ -20,7 +21,7 @@ import {
   LinkedinOutlined,
   FilePdfOutlined,
   GlobalOutlined,
-  DownloadOutlined,
+ 
 } from "@ant-design/icons";
 
 const { useContext } = React;
@@ -28,12 +29,14 @@ const { useContext } = React;
 const GraduateInfo = ({ graduate }) => {
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(GraduateContext);
-
   const { Meta } = Card;
-
   const { Title } = Typography;
-
   const pdfChange = () => {
+    const { htmlToText } = require("html-to-text");
+    const text = htmlToText(graduate.resume_text, {
+      wordwrap: 130,
+    });
+
     var doc = new jsPDF();
     doc.autoTable({ graduate });
     doc.autoTable({
@@ -52,7 +55,7 @@ const GraduateInfo = ({ graduate }) => {
         // [graduate.resume_textarea]
         [
           {
-            content: graduate.resume_text,
+            content: text,
             styles: { halign: "left" },
             font: "helvetica",
           },
@@ -64,97 +67,93 @@ const GraduateInfo = ({ graduate }) => {
 
   return (
     <>
-      <div className="site-page-header-ghost-wrapper">
-        <PageHeader
-          ghost={false}
-          level={3}
-          onBack={() => window.history.back()}
-          title={graduate.fullname}
-          subTitle={graduate.current_location}
-          extra={[]}
-        >
-          <Descriptions size="small" column={3}>
-            <Descriptions.Item label="Profile Created">
-              : {graduate.createdAt}
-            </Descriptions.Item>
-            {/*
-            <Descriptions.Item label="Creation Time">
-              2017-01-10
-            </Descriptions.Item>
-            <Descriptions.Item label="Effective Time">
-              2017-10-10
-            </Descriptions.Item> */}
-          </Descriptions>
-        </PageHeader>
-      </div>
-      <div>
-        <Card
-          hoverable
-          title={<Title level={4}>{graduate.headline}</Title>}
-          bordered={false}
-          style={{ width: 800, float: "left", margin: 40 }}
-          className="site-layout-content"
-          //   extra={
-          //     <Link to={`/graduates/${graduate._id}`}>
-          //       <IconFont type="icon-tuichu" style={{ width: "40px" }} />
-          //     </Link>
-          //   }
-        >
-          <Meta
-            title={graduate.headline}
-            description={graduate.current_location}
-          />
-          <hr />
-          <p>{graduate.languages} </p>
-          <Space>
-            <p>{graduate.email}</p>
+      {/* <div className="site-page-header-ghost-wrapper"> */}
+      <PageHeader
+        ghost={false}
+        style={{ width: 600 }}
+        level={3}
+        onBack={() => window.history.back()}
+        title={graduate.fullname}
+        subTitle={graduate.current_location}
+        extra={[]}
+      >
+        <Descriptions size="small" column={3}>
+          <Descriptions.Item label="Profile Created">
+            : {graduate.createdAt}
+          </Descriptions.Item>
 
-            <p>{graduate.githubId}</p>
-          </Space>
-          <Space>
-            <Tag color={"green"}>{graduate.full_time ? "Full Time" : null}</Tag>
-            <Tag color={"green"}>{graduate.part_time ? "Part Time" : null}</Tag>
-          </Space>
-          <Divider orientation="left"></Divider>
-          <Row>
+        </Descriptions>
+      </PageHeader>
+      {/* </div> */}
+      <Row>
+        <Col span={12} offset={6}>
+          <Card
+            hoverable
+            title={<Title level={4}>{graduate.headline}</Title>}
+            bordered={false}
+            style={{ width: 800, marginTop: 20 }}
+
+          >
+            <Meta
+              title={graduate.headline}
+              description={graduate.current_location}
+            />
+            <hr />
+            <p>{graduate.languages} </p>
             <Space>
-              <a href={graduate.githubId}>
-                <GithubOutlined
+              <p>{graduate.email}</p>
+
+              <p>{graduate.githubId}</p>
+            </Space>
+            <Space>
+              <Tag color={"green"}>
+                {graduate.full_time ? "Full Time" : null}
+              </Tag>
+              <Tag color={"green"}>
+                {graduate.part_time ? "Part Time" : null}
+              </Tag>
+            </Space>
+            <Divider orientation="left"></Divider>
+            <Row>
+              <Space>
+                <a href={graduate.githubId}>
+                  <GithubOutlined
+                    style={{ FontSize: "60px", color: "black", width: "10rem" }}
+                  />
+                </a>
+
+                <LinkedinOutlined
                   style={{ FontSize: "60px", color: "black", width: "10rem" }}
                 />
-              </a>
+              </Space>
+            </Row>
+            <br />
+            <Row>
+              <Space>
+                <FilePdfOutlined
+                  label="CV"
+                  style={{ fontSize: "40px", color: "black", width: "10rem" }}
+                />
 
-              <LinkedinOutlined
-                style={{ FontSize: "60px", color: "black", width: "10rem" }}
-              />
-            </Space>
-          </Row>
-          <br />
-          <Row>
-            <Space>
-              <FilePdfOutlined
-                label="CV"
-                style={{ fontSize: "40px", color: "black", width: "10rem" }}
-              />
+                <GlobalOutlined
+                  label="Website"
+                  style={{ fontSize: "40px", color: "black", width: "10rem" }}
+                />
+              </Space>
+            </Row>
+            <br />
+            <Row>
+              <Space>
+                <p>{parse(graduate.resume_text)}</p>
 
-              <GlobalOutlined
-                label="Website"
-                style={{ fontSize: "40px", color: "black", width: "10rem" }}
-              />
-            </Space>
-          </Row>
-          <br />
-          <Row>
-            <Space>
-              <p>{parse(graduate.resume_text)}</p>
-
-              <Button type="primary" onClick={pdfChange}>
-                Download CV Pdf
-              </Button>
-            </Space>
-          </Row>
-        </Card>
-      </div>
+                <Button type="primary" onClick={pdfChange}>
+                  Download CV Pdf
+                </Button>
+              </Space>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
     </>
   );
 };
