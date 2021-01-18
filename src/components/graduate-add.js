@@ -7,12 +7,13 @@ import { GraduateContext } from "../context/graduate-context";
 import { flashErrorMessage } from "./flash-message";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import parse from "html-react-parser";
 import { Layout, Divider, Row, Button, Space, Checkbox, Col } from "antd";
 
 const GraduateAdd = ({ graduate }) => {
   const [state, dispatch] = useContext(GraduateContext);
   const [redirect, setRedirect] = useState(false);
-  const { control, errors, handleSubmit} = useForm({
+  const { control, errors, handleSubmit } = useForm({
     defaultValues: graduate,
   });
 
@@ -36,7 +37,11 @@ const GraduateAdd = ({ graduate }) => {
   if (redirect) {
     return <Redirect to="/" />;
   }
+  const { htmlToText } = require("html-to-text");
 
+  // const text = htmlToText(graduate.resume_text, {
+  //   wordwrap: 130,
+  // });
   const updateGraduate = async (data) => {
     try {
       const response = await axios.patch(
@@ -62,7 +67,7 @@ const GraduateAdd = ({ graduate }) => {
   };
 
   if (redirect) {
-    return <Redirect to="/" />;
+    return <Redirect to={`/graduates/${graduate._id}`} />;
   }
 
   const layout = {
@@ -111,7 +116,7 @@ const GraduateAdd = ({ graduate }) => {
             <div className="input-group">
               <label className="label">Headline</label>
               <Controller
-                as={inputField("headline")}
+                as={inputField("Headline")}
                 name="headline"
                 control={control}
                 defaultValue=""
@@ -297,10 +302,10 @@ const GraduateAdd = ({ graduate }) => {
                 />
               </div>
               <div className="input-group">
-                <label className="label">Github Link</label>
+                <label className="label">Github Nickname</label>
                 <Controller
-                  as={inputField("github")}
-                  name="github"
+                  as={inputField("Github Nickname")}
+                  name="github_nickname"
                   control={control}
                   defaultValue=""
                 />
@@ -326,7 +331,7 @@ const GraduateAdd = ({ graduate }) => {
                 <label className="label">Email</label>
                 <Controller
                   as={inputField("Email")}
-                  name="Email"
+                  name="email"
                   control={control}
                   defaultValue=""
                 />
@@ -349,7 +354,7 @@ const GraduateAdd = ({ graduate }) => {
                     }
                     control={control}
                     style={{ height: "500px" }}
-                    value={value}
+                    value={htmlToText(value)}
                   />
                 )}
               />

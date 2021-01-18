@@ -39,9 +39,9 @@ const App = () => {
           />
           <Route exact path="/graduates/new" component={GraduateAddPage} />
           <Route path="/graduates/edit/:_id" component={GraduateAddPage} />
-          <Route path="/graduates/:_id" component={GraduateProfilePage} />
+          <Route exact path="/graduates/:_id" component={GraduateProfilePage} />
           {/* <Route path="/graduates/:_id" component={GraduateProfilePage} />{" "} */}
-          <Route  path="/graduates/preview/:_id" component={GraduateInfoPage} />
+          <Route exact  path="/graduates/preview/:_id" component={GraduateInfoPage} />
           <Route exact path="/contact" component={ContactForm} />
           <Route>
             <NotFound />
@@ -72,6 +72,11 @@ const NavBar = () => {
               <Menu.Item>
                 <Link activeClassName="active" to="/graduates/new">
                   Add Graduate
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link activeClassName="active" to="/graduates/:_id">
+                 Go to your profile
                 </Link>
               </Menu.Item>
               <Menu.Item>

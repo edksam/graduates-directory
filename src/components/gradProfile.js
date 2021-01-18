@@ -44,11 +44,12 @@
 
 // export default GraduateProfile;
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import { GraduateContext } from "../context/graduate-context";
 import { flashErrorMessage } from "../components/flash-message";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   Card,
@@ -73,6 +74,7 @@ import {
 const { useContext } = React;
 
 const GraduateProfile = ({ graduate }) => {
+  const { user } = useAuth0();
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(GraduateContext);
   const [redirect, setRedirect] = useState(false);
@@ -114,18 +116,22 @@ const GraduateProfile = ({ graduate }) => {
           onBack={() => window.history.back()}
           title={graduate.fullname}
           subTitle={graduate.current_location}
-          extra={[
-            <Link to={`/graduates/edit/${graduate._id}`}>
-              <Button key="2">Edit</Button>
-            </Link>,
-            <Button
-              key="1"
-              type="primary"
-              onClick={() => deleteGraduate(graduate._id)}
-            >
-              Delete
-            </Button>,
-          ]}
+          extra={
+            graduate.email === user.email
+              ? [
+                  <Link to={`/graduates/edit/${graduate._id}`}>
+                    <Button key="2">Edit</Button>
+                  </Link>,
+                  <Button
+                    key="1"
+                    type="primary"
+                    onClick={() => deleteGraduate(graduate._id)}
+                  >
+                    Delete
+                  </Button>,
+                ]
+              : []
+          }
         >
           <Descriptions size="small" column={3}>
             <Descriptions.Item label="Profile Created">

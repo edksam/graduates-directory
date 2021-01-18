@@ -67,7 +67,7 @@ module.exports = function (app) {
       website: {
         type: String,
       },
-      github_username: {
+      github_nickname: {
         type: String,
       },
       resume_text: {

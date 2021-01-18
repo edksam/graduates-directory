@@ -19,10 +19,12 @@ import {
   GlobalOutlined,
 } from "@ant-design/icons";
 import parse from "html-react-parser";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const { useContext } = React;
 
 const GraduatePortal = ({ graduate }) => {
+  const { user } = useAuth0();
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(GraduateContext);
   const { Meta } = Card;
@@ -33,13 +35,16 @@ const GraduatePortal = ({ graduate }) => {
   });
   const { Title } = Typography;
 
+  console.log(user, graduate);
+  if (!graduate) return "loading";
+
   return (
     <div className="site-card-wrapper">
       <Card
         hoverable
         title={<Title level={3}>{graduate.fullname}</Title>}
         bordered={false}
-        style={{ width: 390, margin: 15,maxHeight: 1200}}
+        style={{ width: 390, margin: 15, maxHeight: 1200 }}
         extra={
           <Link to={`/graduates/${graduate._id}`}>
             <IconFont type="icon-tuichu" style={{ width: "40px" }} />
@@ -104,7 +109,7 @@ const GraduatePortal = ({ graduate }) => {
         <br />
         <Collapse ghost>
           <Panel header="Read Resume" key="1">
-            <p>{parse(graduate.resume_text)}</p>
+            <p>{typeof graduate.resume_text === "string" && parse(graduate.resume_text)}</p>
           </Panel>
         </Collapse>
         <Space>
