@@ -7,15 +7,12 @@ import { GraduateContext } from "../context/graduate-context";
 import { flashErrorMessage } from "./flash-message";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import parse from "html-react-parser";
 import { Layout, Divider, Row, Button, Space, Checkbox, Col } from "antd";
 
 const GraduateAdd = ({ graduate }) => {
   const [state, dispatch] = useContext(GraduateContext);
   const [redirect, setRedirect] = useState(false);
-  const { control, errors, handleSubmit } = useForm({
-    defaultValues: graduate,
-  });
+  const { control, errors, handleSubmit } = useForm();
 
   const createGraduate = async (data) => {
     try {
@@ -37,11 +34,7 @@ const GraduateAdd = ({ graduate }) => {
   if (redirect) {
     return <Redirect to="/" />;
   }
-  const { htmlToText } = require("html-to-text");
 
-  // const text = htmlToText(graduate.resume_text, {
-  //   wordwrap: 130,
-  // });
   const updateGraduate = async (data) => {
     try {
       const response = await axios.patch(
@@ -354,7 +347,7 @@ const GraduateAdd = ({ graduate }) => {
                     }
                     control={control}
                     style={{ height: "500px" }}
-                    value={htmlToText(value)}
+                    value={value}
                   />
                 )}
               />
