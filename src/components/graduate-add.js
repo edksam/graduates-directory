@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { inputField } from "../pages/Inputs";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { GraduateContext } from "../context/graduate-context";
 import { flashErrorMessage } from "./flash-message";
 import ReactQuill from "react-quill";
@@ -12,7 +12,10 @@ import { Layout, Divider, Row, Button, Space, Checkbox, Col } from "antd";
 const GraduateAdd = ({ graduate }) => {
   const [state, dispatch] = useContext(GraduateContext);
   const [redirect, setRedirect] = useState(false);
-  const { control, errors, handleSubmit } = useForm();
+  let history = useHistory();
+  const { control, errors, handleSubmit } = useForm({
+    defaultValues: graduate,
+  });
 
   const createGraduate = async (data) => {
     try {
@@ -50,6 +53,10 @@ const GraduateAdd = ({ graduate }) => {
       flashErrorMessage(dispatch, error);
     }
   };
+
+  function handleCancel() {
+    history.push("/graduates");
+  }
 
   const onSubmit = async (data) => {
     if (graduate._id) {
@@ -357,6 +364,9 @@ const GraduateAdd = ({ graduate }) => {
             <Space>
               <Button type="primary" htmlType="submit">
                 Save
+              </Button>
+              <Button onClick={handleCancel} type="primary" htmlType="submit">
+                Cancel
               </Button>
             </Space>
           </form>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { GraduateContext } from "../context/graduate-context";
-import { useAuth0 } from "@auth0/auth0-react";
 import GraduateProfile from "../components/gradProfile";
 
 
 const { useContext } = React;
 
 const GraduateProfilePage = ({ match }) => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(GraduateContext);
   const [loading, setLoading] = useState(true);
@@ -29,7 +27,7 @@ const GraduateProfilePage = ({ match }) => {
   }, [match.params, dispatch]);
   if (!state.graduate) return loading;
 
-  console.log(user)
+ 
 
   console.log(state.graduate.fullname);
   return <GraduateProfile graduate={state.graduate} />;
