@@ -39,7 +39,7 @@ const GraduateCard = ({ graduate }) => {
         hoverable
         title={<Title level={3}>{graduate.fullname}</Title>}
         bordered={false}
-        style={{ width: 390, margin: 15, maxHeight: 1200}}
+        style={{ width: 380, margin: 15, maxHeight: 1200}}
         extra={
           <Link to={`/graduates/preview/${graduate._id}`}>
             <IconFont type="icon-tuichu" style={{ width: "40px" }} />

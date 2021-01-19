@@ -1,47 +1,3 @@
-//       <div>
-//         <IconLink
-//           src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
-//           text="Linkedin"
-//         />
-//         <IconLink
-//           src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
-//           text=" Github"
-//         />
-//         <IconLink
-//           src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-//           text="Website"
-//         />
-//       </div>
-//       <Divider orientation="left">Resume Text</Divider>
-//       <Collapse ghost>
-//         <Panel header="Read Resume" key="1">
-//           <p>{graduate.resume_text}</p>
-//         </Panel>
-//       </Collapse>
-//     </>
-//   );
-
-//   return (
-//     <>
-//       <PageHeader
-//         title={graduate.fullname}
-//         className="site-page-header-ghost-wrapper"
-//         onBack={() => window.history.back()}
-//         subTitle={graduate.current_location}
-//         tags={<Tag color="blue">Running</Tag>}
-//         extra={[
-//           <Link to={`/graduates/edit/${graduate._id}`}><Button key="2">Edit</Button></Link>,
-//           <Button key="1" type="primary">
-//             Delete
-//           </Button>,
-//         ]}
-//       >
-//         <Content>{content}</Content>
-//       </PageHeader>
-//     </>
-//   );
-// };
-
 // export default GraduateProfile;
 
 import React, { useState } from "react";
@@ -109,108 +65,118 @@ const GraduateProfile = ({ graduate }) => {
 
   return (
     <>
-      <div className="site-page-header-ghost-wrapper">
-        <PageHeader
-          ghost={false}
-          level={3}
-          onBack={() => window.history.back()}
-          title={graduate.fullname}
-          subTitle={graduate.current_location}
-          extra={
-            graduate.email === user.email
-              ? [
-                  <Link to={`/graduates/edit/${graduate._id}`}>
-                    <Button key="2">Edit</Button>
-                  </Link>,
-                  <Button
-                    key="1"
-                    type="primary"
-                    onClick={() => deleteGraduate(graduate._id)}
-                  >
-                    Delete
-                  </Button>,
-                ]
-              : []
-          }
-        >
-          <Descriptions size="small" column={3}>
-            <Descriptions.Item label="Profile Created">
-              : {graduate.createdAt}
-            </Descriptions.Item>
+      {graduate.email === user.email ? (
+        <Row>
+          <div className="site-page-header-ghost-wrapper">
+            <PageHeader
+              ghost={false}
+              level={3}
+              onBack={() => window.history.back()}
+              title={graduate.fullname}
+              subTitle={graduate.current_location}
+              extra={[
+                <Link to={`/graduates/edit/${graduate._id}`}>
+                  <Button key="2">Edit</Button>
+                </Link>,
+                <Button
+                  key="1"
+                  type="primary"
+                  onClick={() => deleteGraduate(graduate._id)}
+                >
+                  Delete
+                </Button>,
+              ]}
+            >
+              <Descriptions size="small" column={3}>
+                <Descriptions.Item label="Profile Created">
+                  : {graduate.createdAt}
+                </Descriptions.Item>
 
-            <Descriptions.Item label="Creation Time">
-              2017-01-10
-            </Descriptions.Item>
-            <Descriptions.Item label="Effective Time">
-              2017-10-10
-            </Descriptions.Item>
-          </Descriptions>
-        </PageHeader>
-      </div>
-      <div>
-        <Card
-          hoverable
-          title={<Title level={4}>{graduate.headline}</Title>}
-          bordered={false}
-          style={{ width: 800, display: "flex", margin: 40 }}
-          className="site-page-header-ghost-wrapper"
-          extra={
-            <Link to={`/graduates/${graduate._id}`}>
-              <IconFont type="icon-tuichu" style={{ width: "40px" }} />
-            </Link>
-          }
-        >
-          <Meta
-            title={graduate.headline}
-            description={graduate.current_location}
-          />
-          <hr />
-          <p>{graduate.languages} </p>
-          <Space>
-            <p>{graduate.email}</p>
-
-            <p>{graduate.githubId}</p>
-          </Space>
-          <Space>
-            <Tag color={"green"}>{graduate.full_time ? "Full Time" : null}</Tag>
-            <Tag color={"green"}>{graduate.part_time ? "Part Time" : null}</Tag>
-          </Space>
-          <Divider orientation="left"></Divider>
-          <Row>
+                <Descriptions.Item label="Creation Time">
+                  2017-01-10
+                </Descriptions.Item>
+                <Descriptions.Item label="Effective Time">
+                  2017-10-10
+                </Descriptions.Item>
+              </Descriptions>
+            </PageHeader>
+          </div>
+          <Card
+            hoverable
+            title={<Title level={4}>{graduate.headline}</Title>}
+            bordered={false}
+            style={{ maxWidth: 900, marginLeft: 40, marginTop: 10 }}
+            className=""
+            extra={
+              <Link to={`/graduates/${graduate._id}`}>
+                <IconFont type="icon-tuichu" style={{ width: "40px" }} />
+              </Link>
+            }
+          >
+            <Meta
+              title={graduate.headline}
+              description={graduate.current_location}
+            />
+            <hr />
+            <p>Languages Spoken : {graduate.languages} </p>
             <Space>
-              <a href={graduate.githubId}>
-                <GithubOutlined
+              <p>Your Email :{graduate.email}</p>
+
+              <p>Your Github Nickname : {graduate.githubId}</p>
+            </Space>
+            <Space>
+              Available for :{" "}
+              <Tag color={"green"}>
+                {graduate.full_time ? "Full Time" : null}
+              </Tag>
+              Available for :{" "}
+              <Tag color={"geekblue"}>
+                {graduate.part_time ? "Part Time" : null}
+              </Tag>
+              Availble for :{" "}
+              <Tag color={"volcano"}>
+                {graduate.internship ? "Internship" : null}
+              </Tag>
+            </Space>
+            <Divider orientation="left"></Divider>
+            <Row>
+              <Space>
+                <a href={graduate.githubId}>
+                  <GithubOutlined
+                    style={{ FontSize: "60px", color: "black", width: "10rem" }}
+                  />
+                </a>
+
+                <LinkedinOutlined
                   style={{ FontSize: "60px", color: "black", width: "10rem" }}
                 />
-              </a>
+              </Space>
+            </Row>
+            <br />
+            <Row>
+              <Space>
+                <FilePdfOutlined
+                  label="CV"
+                  style={{ fontSize: "40px", color: "black", width: "10rem" }}
+                />
 
-              <LinkedinOutlined
-                style={{ FontSize: "60px", color: "black", width: "10rem" }}
-              />
-            </Space>
-          </Row>
-          <br />
-          <Row>
-            <Space>
-              <FilePdfOutlined
-                label="CV"
-                style={{ fontSize: "40px", color: "black", width: "10rem" }}
-              />
-
-              <GlobalOutlined
-                label="Website"
-                style={{ fontSize: "40px", color: "black", width: "10rem" }}
-              />
-            </Space>
-          </Row>
-          <br />
-          <Collapse ghost>
-            <Panel header="Read Resume" key="1">
-              <p>{graduate.resume_text}</p>
-            </Panel>
-          </Collapse>
-        </Card>
-      </div>
+                <GlobalOutlined
+                  label="Website"
+                  style={{ fontSize: "40px", color: "black", width: "10rem" }}
+                />
+              </Space>
+            </Row>
+            <br />
+            <Collapse ghost>
+              <Panel header="Read Resume" key="1">
+                <p>{graduate.resume_text}</p>
+              </Panel>
+            </Collapse>
+          </Card>
+        </Row>
+      ) : (
+        []
+      )}
     </>
   );
 };

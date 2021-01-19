@@ -1,16 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GraduateContext } from "../context/graduate-context";
-import {
-  Card,
-  Space,
-  Tag,
-  Collapse,
-  Row,
-  Divider,
-  Typography,
-  Button,
-} from "antd";
+import { Card, Space, Tag, Collapse, Row, Divider, Typography } from "antd";
 import { createFromIconfontCN } from "@ant-design/icons";
 import {
   GithubOutlined,
@@ -46,9 +37,13 @@ const GraduatePortal = ({ graduate }) => {
         bordered={false}
         style={{ width: 390, margin: 15, maxHeight: 1200 }}
         extra={
-          <Link to={`/graduates/${graduate._id}`}>
-            <IconFont type="icon-tuichu" style={{ width: "40px" }} />
-          </Link>
+          graduate.email === user.email ? (
+            <Link to={`/graduates/${graduate._id}`}>
+              <IconFont type="icon-tuichu" style={{ width: "40px" }} />
+            </Link>
+          ) : (
+            ""
+          )
         }
       >
         <Meta
@@ -109,16 +104,19 @@ const GraduatePortal = ({ graduate }) => {
         <br />
         <Collapse ghost>
           <Panel header="Read Resume" key="1">
-            <p>{typeof graduate.resume_text === "string" && parse(graduate.resume_text)}</p>
+            <p>
+              {typeof graduate.resume_text === "string" &&
+                parse(graduate.resume_text)}
+            </p>
           </Panel>
         </Collapse>
-        <Space>
+        {/* <Space>
           <>
             <Link to="/contact">
               <Button type="primary">Email CYF</Button>
             </Link>
           </>
-        </Space>
+        </Space> */}
       </Card>
     </div>
   );

@@ -21,7 +21,7 @@ import {
   LinkedinOutlined,
   FilePdfOutlined,
   GlobalOutlined,
- 
+
 } from "@ant-design/icons";
 
 const { useContext } = React;
@@ -67,10 +67,10 @@ const GraduateInfo = ({ graduate }) => {
 
   return (
     <>
-      {/* <div className="site-page-header-ghost-wrapper"> */}
+      <div className="site-page-header-ghost-wrapper">
       <PageHeader
         ghost={false}
-        style={{ width: 600 }}
+        // style={{ width: 600 }}
         level={3}
         onBack={() => window.history.back()}
         title={graduate.fullname}
@@ -86,7 +86,7 @@ const GraduateInfo = ({ graduate }) => {
       </PageHeader>
       {/* </div> */}
       <Row>
-        <Col span={12} offset={6}>
+        <Col span={12}>
           <Card
             hoverable
             title={<Title level={4}>{graduate.headline}</Title>}
@@ -154,6 +154,7 @@ const GraduateInfo = ({ graduate }) => {
           </Card>
         </Col>
       </Row>
+      </div>
     </>
   );
 };

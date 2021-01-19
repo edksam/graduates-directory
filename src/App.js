@@ -25,7 +25,7 @@ const App = () => {
         <Content style={{ padding: "0 20px" }}>
           <PageHeader
             className="site-page-header"
-            title="Graduates Directory"
+            title="Welcome to CYF Graduates Directory"
           />
         </Content>
 
@@ -38,10 +38,18 @@ const App = () => {
             component={GraduateAddPage}
           />
           <Route exact path="/graduates/new" component={GraduateAddPage} />
-          <Route exact path="/graduates/edit/:_id" component={GraduateAddPage} />
+          <Route
+            exact
+            path="/graduates/edit/:_id"
+            component={GraduateAddPage}
+          />
           <Route exact path="/graduates/:_id" component={GraduateProfilePage} />
           {/* <Route path="/graduates/:_id" component={GraduateProfilePage} />{" "} */}
-          <Route exact  path="/graduates/preview/:_id" component={GraduateInfoPage} />
+          <Route
+            exact
+            path="/graduates/preview/:_id"
+            component={GraduateInfoPage}
+          />
           <Route exact path="/contact" component={ContactForm} />
           <Route>
             <NotFound />
@@ -69,16 +77,6 @@ const NavBar = () => {
         <Menu style={{ float: "right" }} theme="dark" mode="horizontal">
           {isAuthenticated && (
             <>
-              <Menu.Item>
-                <Link activeClassName="active" to="/graduates/new">
-                  Add Graduate
-                </Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link activeClassName="active" to="/graduates/:_id">
-                 Go to your profile
-                </Link>
-              </Menu.Item>
               <Menu.Item>
                 <Link activeClassName="active" to="/graduates">
                   Graduates Page
